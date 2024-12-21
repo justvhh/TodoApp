@@ -13,7 +13,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.todoapp.activity.CreateTaskActivity
+import com.example.todoapp.adapter.TaskAdapter
 import com.example.todoapp.databinding.ActivityMainBinding
+import com.example.todoapp.entity.Task
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

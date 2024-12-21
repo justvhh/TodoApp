@@ -1,4 +1,4 @@
-package com.example.todoapp
+package com.example.todoapp.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,6 +10,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.todoapp.R
+import com.example.todoapp.entity.Task
 
 class TaskAdapter(private val tasksList: List<Task>) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>(), Filterable {
 

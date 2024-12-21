@@ -1,12 +1,12 @@
-package com.example.todoapp
+package com.example.todoapp.activity
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.todoapp.databinding.ActivityCreateTaskBinding
+import com.example.todoapp.entity.Task
 import com.google.firebase.database.FirebaseDatabase
 
 private val firebaseDatabase = FirebaseDatabase.getInstance("https://todoapp-52d1f-default-rtdb.firebaseio.com/")
