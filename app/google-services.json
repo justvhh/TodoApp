@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "590169627525",
+    "firebase_url": "https://android-pj-70dfa-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "android-pj-70dfa",
+    "storage_bucket": "android-pj-70dfa.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590169627525:android:af5ab8cd4e74d1081d42ec",
+        "android_client_info": {
+          "package_name": "com.example.pj1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC48nh4dOjT2GoYUbZKoMfbMA9f9yxRGA4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590169627525:android:0f8b6fe59083d1831d42ec",
+        "android_client_info": {
+          "package_name": "com.example.todoapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC48nh4dOjT2GoYUbZKoMfbMA9f9yxRGA4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
