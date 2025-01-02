@@ -22,7 +22,7 @@ class CreateTaskActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
+        viewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         initialize()
     }
 
@@ -54,5 +54,8 @@ class TaskViewModel : ViewModel() {
             task.id = it
             databaseReference.child(it).setValue(task)
         }
+    }
+    fun updateTask(task: Task) {
+        databaseReference.child(task.id).setValue(task)
     }
 }

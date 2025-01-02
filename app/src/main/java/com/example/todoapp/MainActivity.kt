@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -21,7 +22,6 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-
 
 
 class MainActivity : AppCompatActivity() {
@@ -49,7 +49,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         val recyclerView = binding.recyclerView
-        adapter = TaskAdapter(tasksList)
+        adapter = TaskAdapter(tasksList) { position ->
+            val task = tasksList[position]
+            val bottomSheetFragment = TaskBottomSheetFragment(task)
+            bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+        }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
     }
@@ -57,10 +61,10 @@ class MainActivity : AppCompatActivity() {
     private fun setupClickListeners() {
         val textViews = listOf(binding.textView1, binding.textView2, binding.textView3)
 
-        var lastSelectedView: TextView? = null
+        var lastSelectedView: TextView = binding.textView1
 
         val clickListener = View.OnClickListener { view ->
-            lastSelectedView?.setBackgroundResource(R.drawable.border_button)
+            lastSelectedView.setBackgroundResource(R.drawable.border_button)
             when (view.id) {
                 binding.textView1.id-> adapter.updateList(tasksList)
                 binding.textView3.id -> adapter.updateList(completedTasks)
@@ -77,6 +81,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     private fun setupSearchBox() {
         val handler = Handler(Looper.getMainLooper())
 
@@ -87,7 +92,7 @@ class MainActivity : AppCompatActivity() {
                 handler.removeCallbacksAndMessages(null)
                 handler.postDelayed({
                     adapter.filter.filter(charSequence)
-                }, 500)
+                }, 100)
             }
 
             override fun afterTextChanged(editable: Editable?) {}
@@ -122,12 +127,14 @@ class MainActivity : AppCompatActivity() {
                 tasksList.add(task).apply { tasksList.sortWith(compareByDescending<Task> { !it.isCompleted }.thenByDescending { it.isUrgent }) }
                 callBack.updateList(tasksList)
                 adapter.updateList(tasksList)
+                Log.d("TAG", "onChildAdded: $task")
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
                 val task: Task = snapshot.getValue(Task::class.java)!!
                 val position = tasksList.indexOfFirst { it.id == task.id }
                 tasksList[position] = task
+                tasksList.sortWith(compareByDescending<Task> { !it.isCompleted }.thenByDescending { it.isUrgent })
                 adapter.notifyItemChanged(position)
                 callBack.updateList(tasksList)
             }
@@ -149,6 +156,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
     interface tasksListUpdateCallBack {
         fun updateList(newList: List<Task>)
     }

@@ -13,19 +13,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp.R
 import com.example.todoapp.entity.Task
 
-class TaskAdapter(private val tasksList: List<Task>) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>(), Filterable {
+class TaskAdapter(private var tasksList: List<Task>, private val onItemClick: (Int) -> Unit) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>(), Filterable {
 
     private var filteredTaskList: List<Task> = tasksList.toMutableList()
 
-    class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class TaskViewHolder(itemView: View, onItemClick: (Int) -> Unit) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.task_name)
         val taskColor: LinearLayout = itemView.findViewById(R.id.task_color)
         var status: TextView = itemView.findViewById(R.id.task_status)
+        init {
+            itemView.setOnClickListener {
+                onItemClick(adapterPosition)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
-        return TaskViewHolder(view)
+        return TaskViewHolder(view, onItemClick)
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
@@ -68,6 +73,7 @@ class TaskAdapter(private val tasksList: List<Task>) : RecyclerView.Adapter<Task
     }
 
     fun updateList(newList: List<Task>) {
+        tasksList = newList
         filteredTaskList = newList
         notifyDataSetChanged()
     }
